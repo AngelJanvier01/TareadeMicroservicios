@@ -1,0 +1,88 @@
+<mxfile host="65bd71144e">
+    <diagram name="Diagrama Microservicios" id="1">
+        <mxGraphModel dx="2652" dy="962" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="gateway" value="Tyk Gateway&#xa;(Contenedor)&#xa;Componente responsable de recibir y responder las peticiones realizadas por otros sistemas." style="shape=process;whiteSpace=wrap;html=1;fillColor=#5596f7;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="300" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cliente" value="Cliente&#xa;[Contenedor: Flutter 2.x, Dart 2.x]&#xa;Componentes que utiliza la funcionalidad que realiza los microservicios." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#a3d5ff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="20" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="telegram" value="TELEGRAM&#xa;[herramienta de mensajería]&#xa;Recibe el mensaje y el pdf de actualización de la póliza solicitada al chat del bot." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#a3d5ff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="60" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="simulador" value="Simulador&#xa;[Contenedor: Python 3.x]&#xa;Genera pagos simulados." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="120" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="notificador" value="Notificador&#xa;[Contenedor: Python 3.x, Flask 2.x]&#xa;Generar el documento de la póliza de un asegurado." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="pagos" value="Pagos&#xa;[Contenedor: Go]&#xa;Mostrar los pagos realizados por los clientes" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="250" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="validator" value="payment-validator-ms&#xa;[Contenedor: Go]&#xa;Valida pagos y notifica al cliente" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="110" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="redis" value="Base de datos&#xa;[Contenedor: Redis 6.0.x]&#xa;Componentes responsables de registrar y almacenar las peticiones recibidas por el Gateway." style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#a3d5ff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="360" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="pump" value="Tyk Pump&#xa;[Contenedor]&#xa;Componente complementario que lee, procesa y envía datos agregados desde Redis hacia MongoDB" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="480" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="gestor" value="Gestor de clientes&#xa;[Contenedor: Python 3.x, Flask 2.x]&#xa;Gestiona la información de los clientes en el sistema." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="510" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="reporteador" value="Reporteador&#xa;[Contenedor: Python 3.x, Flask 2.x]&#xa;Genera el documento de la póliza de un asegurado." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#d4eaff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="505" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="dashboard" value="Tyk Dashboard&#xa;[Contenedor]&#xa;Componente complementario que permite configurar el gateway a través de una interfaz de usuario." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#a3d5ff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="370" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="mongo" value="Base de datos&#xa;[Contenedor: MongoDB 4.4.x]&#xa;Responsable de persistir los datos recibidos desde el componente Tyk Pump." style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#a3d5ff;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="610" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="line1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="cliente" target="gateway" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="notificador" target="telegram" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="simulador" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="pagos" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="validator" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="reporteador" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="gestor" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="notificador" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="validator" target="telegram" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="redis" target="pump" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="pump" target="mongo" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="line12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" parent="1" source="gateway" target="redis" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" style="edgeStyle=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.086;entryY=0.99;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="gateway" target="dashboard">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
