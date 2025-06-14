@@ -10,77 +10,79 @@
 
 ### 1) ¿Qué es un microservicio?
 
-Un microservicio es una unidad de software pequeña, independiente y desplegable que realiza una única función de negocio dentro de un sistema más grande. Cada microservicio se comunica con otros mediante APIs bien definidas y permite escalar y mantener el sistema de forma más flexible.
+Un microservicio es una pieza de software pequeña y autónoma que tiene una responsabilidad bien definida dentro de un sistema más grande. Se comunica con otros microservicios a través de interfaces (APIs) y puede ser desarrollado, probado, desplegado y escalado de manera independiente. Esta forma de arquitectura facilita la evolución continua del sistema, ya que cada microservicio puede mejorarse o sustituirse sin afectar a los demás, siempre que se mantenga su contrato de comunicación. Esto lo hace ideal para sistemas que deben ser altamente escalables, mantenibles y adaptables a nuevas necesidades del negocio.
 
 ---
 
 ### 2) Las 9 características según Martin Fowler y James Lewis
 
-| Característica                                     | Descripción                                                                     |
-| --------------------------------------------------- | -------------------------------------------------------------------------------- |
-| **1. Componentization via Services**          | Cada parte del sistema se construye como un servicio independiente.              |
-| **2. Organised around Business Capabilities** | Los equipos se organizan por funcionalidades de negocio, no por capas técnicas. |
-| **3. Products not Projects**                  | Los equipos son responsables de un producto completo, no solo de su desarrollo.  |
-| **4. Smart Endpoints and Dumb Pipes**         | Los microservicios son inteligentes; la comunicación entre ellos es simple.     |
-| **5. Decentralized Governance**               | Se fomenta la autonomía tecnológica en cada equipo.                            |
-| **6. Decentralized Data Management**          | Cada servicio maneja su propia base de datos.                                    |
-| **7. Infrastructure Automation**              | Se automatiza la creación y despliegue de infraestructura.                      |
-| **8. Design for Failure**                     | El sistema se diseña para tolerar fallos de algunos servicios.                  |
-| **9. Evolutionary Design**                    | Permite adaptar la arquitectura conforme cambian los requisitos.                 |
+| Característica                                     | Descripción                                                                                                                                                                              |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Componentization via Services**          | Se divide el sistema en múltiples servicios independientes y desplegables de forma separada, lo que mejora la mantenibilidad y la reutilización.                                        |
+| **2. Organised around Business Capabilities** | Los equipos se estructuran en torno a funcionalidades de negocio completas (por ejemplo: pagos, notificación, gestión de clientes) en lugar de por capas técnicas (backend, frontend). |
+| **3. Products not Projects**                  | El equipo no se limita a entregar un proyecto y olvidarse; mantiene y evoluciona el servicio como un producto a lo largo de su ciclo de vida.                                             |
+| **4. Smart Endpoints and Dumb Pipes**         | Los microservicios realizan la lógica de negocio internamente (endpoints inteligentes) mientras que la comunicación entre ellos es ligera y sencilla (pipes simples, como HTTP/REST).   |
+| **5. Decentralized Governance**               | Cada equipo tiene libertad de elegir las tecnologías y herramientas más adecuadas para su servicio, fomentando la innovación y la responsabilidad técnica.                            |
+| **6. Decentralized Data Management**          | Cada servicio tiene su propia base de datos o almacenamiento, lo que evita cuellos de botella y dependencias excesivas entre servicios.                                                   |
+| **7. Infrastructure Automation**              | Se automatizan tareas repetitivas como pruebas, despliegues y monitoreo usando herramientas de CI/CD y contenedores como Docker, facilitando la entrega continua.                         |
+| **8. Design for Failure**                     | Los microservicios se diseñan para que si uno falla, el resto del sistema pueda seguir operando correctamente, usando patrones de tolerancia a fallos como circuit breakers.             |
+| **9. Evolutionary Design**                    | La arquitectura permite que los servicios evolucionen de forma gradual y controlada, adaptándose a nuevas exigencias sin tener que reestructurar todo el sistema de golpe.               |
 
 ---
 
 ### 3) Diferencia entre microservicio y API
 
-Un microservicio es una aplicación pequeña que ejecuta una lógica de negocio específica. Una API es solo la interfaz de comunicación que expone ese microservicio. Es decir, la API es la puerta de entrada; el microservicio es la lógica y datos internos.
+Una API es una interfaz de programación de aplicaciones: define  **cómo se comunican los sistemas entre sí** . Un microservicio, en cambio, es una aplicación con lógica de negocio, procesamiento de datos y persistencia, **que expone sus funcionalidades mediante una API** para que otros servicios o clientes puedan usarla. Es decir, toda API no es necesariamente un microservicio, pero todo microservicio expone una o varias APIs para interactuar con el resto del ecosistema.
 
 ---
 
 ### 4) ¿Para qué se usa el API Gateway y cuál es su ventaja?
 
-El API Gateway actúa como un único punto de entrada para todas las solicitudes externas hacia los microservicios. Simplifica la gestión de autenticación, balanceo de carga, control de tráfico y seguridad. La ventaja principal es que desacopla a los clientes de la complejidad interna del sistema.
+El **API Gateway** es un componente esencial en arquitecturas de microservicios, ya que centraliza la entrada de todas las solicitudes externas al sistema. Proporciona múltiples funciones clave: autenticación, autorización, balanceo de carga, traducción de protocolos y monitoreo. Al actuar como puerta de enlace única, reduce la complejidad para el cliente, mejora la seguridad al exponer solo los endpoints necesarios y permite aplicar políticas de control de tráfico de forma uniforme. Esto facilita la escalabilidad y el mantenimiento de toda la arquitectura.
 
 ---
 
 ### 5) Tabla de responsabilidades de los elementos del sistema
 
-| Elemento                       | Responsabilidad                                                      |
-| ------------------------------ | -------------------------------------------------------------------- |
-| **API Gateway (Tyk)**    | Orquesta todas las solicitudes de los clientes a los microservicios. |
-| **Cliente (Flutter)**    | Interfaz gráfica para interactuar con el sistema.                   |
-| **Gestor de Clientes**   | Gestiona información de los clientes asegurados.                    |
-| **Notificador**          | Envía notificaciones a clientes mediante Telegram.                  |
-| **Pagos**                | Procesa la lógica relacionada con pagos.                            |
-| **Reporteador**          | Genera reportes del sistema.                                         |
-| **Simulador**            | Simula los pagos realizados para pruebas.                            |
-| **payment-validator-ms** | Lee pagos, valida estado y envía póliza por Telegram.              |
+| Elemento                       | Responsabilidad                                                                                                                                                                                                                      |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **API Gateway (Tyk)**    | Recibe todas las peticiones de los usuarios y las distribuye de forma segura y controlada a cada microservicio correspondiente.                                                                                                      |
+| **Cliente (Flutter)**    | Interfaz amigable que permite a los usuarios finales interactuar con el sistema desde dispositivos móviles.                                                                                                                         |
+| **Gestor de Clientes**   | Administra el registro y actualización de la información de los clientes asegurados, garantizando que los datos estén siempre correctos y disponibles.                                                                            |
+| **Notificador**          | Envía mensajes de confirmación y actualización a los clientes, utilizando la API de Telegram como canal de mensajería confiable.                                                                                                 |
+| **Pagos**                | Microservicio responsable de consultar, mostrar y simular los pagos realizados por los asegurados.                                                                                                                                   |
+| **Reporteador**          | Genera documentos PDF de las pólizas de seguro, personalizando los datos para cada cliente y facilitando la distribución digital.                                                                                                  |
+| **Simulador**            | Crea registros de pagos falsos para pruebas funcionales, sin necesidad de pagos reales.Simula los pagos realizados para pruebas.                                                                                                     |
+| **payment-validator-ms** | Microservicio en Go que lee los registros de pagos, valida su estado y envía notificaciones y documentos por Telegram para completar el flujo de actualización de pólizas.Lee pagos, valida estado y envía póliza por Telegram. |
 
 ---
 
 ### 6) Análisis del sistema: requerimientos y soporte
 
-| Requerimiento de arquitectura     | ¿Es soportado? | ¿Cómo es soportado?                    | ¿Contribuye al objetivo de negocio? |
-| --------------------------------- | --------------- | ---------------------------------------- | ------------------------------------ |
-| Gestión de clientes asegurados   | Sí             | Con el microservicio gestor de clientes. | Sí                                  |
-| Notificación de pago validado    | Sí             | Con payment-validator-ms y notificador.  | Sí                                  |
-| Envío de póliza por mensajería | Sí             | Con Telegram y payment-validator-ms.     | Sí                                  |
+| Requerimiento de arquitectura     | ¿Es soportado? | ¿Cómo es soportado?                                                         | ¿Contribuye al objetivo de negocio? |
+| --------------------------------- | --------------- | ----------------------------------------------------------------------------- | ------------------------------------ |
+| Gestión de clientes asegurados   | Sí             | Mediante el microservicio Gestor de Clientes y su base de datos dedicada.     | Sí                                  |
+| Notificación de pago validado    | Sí             | Con payment-validator-ms, que revisa `payment_records.json` y usa Telegram. | Sí                                  |
+| Envío de póliza por mensajería | Sí             | Con el Reporteador, que genera el PDF, y el Notificador, que lo envía.       | Sí                                  |
+| Usar contenedores                 | Sí             | Con Docker y docker-compose para orquestar todos los servicios.               | Sí                                  |
+| Soportar nuevas tecnologías      | Sí             | Se integra Go para explorar nuevos lenguajes junto a Python y Flutter.        | Sí                                  |
 
 ---
 
 ### 7) Atributos de calidad adicionales
 
-| Atributo      | Definición                       | ¿Es soportado? | ¿Cómo se soporta?                                       |
-| ------------- | --------------------------------- | --------------- | --------------------------------------------------------- |
-| Escalabilidad | Capacidad de crecer bajo demanda. | Sí             | Se pueden añadir más instancias de microservicios.      |
-| Seguridad     | Proteger datos y comunicaciones.  | Sí             | Uso de Tyk Gateway para control de acceso.                |
-| Auditabilidad | Registrar acciones del sistema.   | Sí             | Logs de servicios y registros de pagos.                   |
-| Desempeño    | Respuesta rápida y eficiente.    | Sí             | Servicios independientes optimizados y simulación local. |
+| Atributo      | Definición                                                                    | ¿Es soportado? | ¿Cómo se soporta?                                                                                 |
+| ------------- | ------------------------------------------------------------------------------ | --------------- | --------------------------------------------------------------------------------------------------- |
+| Escalabilidad | Capacidad del sistema de manejar un aumento de carga sin degradar el servicio. | Sí             | Se pueden levantar múltiples instancias de microservicios y balancear tráfico con el API Gateway. |
+| Seguridad     | Protección de la información y control de acceso.                            | Sí             | Se usa Tyk Gateway para autenticar peticiones y se configuran tokens para Telegram.                 |
+| Auditabilidad | Capacidad de rastrear y registrar todas las acciones importantes.              | Sí             | Los logs de contenedores y registros de pagos permiten seguir la pista de todas las operaciones.    |
+| Desempeño    | Tiempo de respuesta óptimo y uso eficiente de recursos.                       | Sí             | Cada servicio hace solo lo necesario, sin afectar a otros, y se aprovecha la concurrencia de Go.    |
 
 ---
 
 ### 8) Justificación de la decisión de diseño
 
-El diseño basado en microservicios permite dividir la complejidad del sistema en unidades pequeñas, que se pueden mantener, desplegar y escalar de forma independiente. Esto soporta el objetivo de negocio de brindar un servicio más rápido y flexible a medida que la cantidad de clientes crece.
+El enfoque de microservicios se eligió porque resuelve los problemas de escalabilidad, flexibilidad y mantenibilidad del sistema original. Al dividir la lógica en componentes independientes, cada equipo puede trabajar en un microservicio sin interferir con otros. Además, si la base de clientes sigue creciendo, podemos escalar solo los servicios más demandados (por ejemplo, el validador de pagos) sin necesidad de redimensionar todo el sistema. Esto optimiza costos y recursos, alineándose con la meta de ofrecer un servicio rápido, confiable y automatizado.
 
 ---
 
