@@ -88,6 +88,8 @@ El enfoque de microservicios se eligió porque resuelve los problemas de escalab
 
 ### 9) Diagrama actualizado
 
+https://www.canva.com/design/DAGqMWAgTE4/cMMkNGN0QuWLwIu1BcYwCw/edit?utm_content=DAGqMWAgTE4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ![[diagrama1.png]]
 
 ![[diagrama2.png]]
